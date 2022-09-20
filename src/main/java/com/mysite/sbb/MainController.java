@@ -3,6 +3,10 @@ package com.mysite.sbb;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 @Controller
 public class MainController {
 
@@ -74,4 +78,14 @@ public class MainController {
 
         return increaseNum++;
     }
+
+    @GetMapping("/servletPlus")
+    @ResponseBody
+    public void showPlus(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        int a = Integer.parseInt(req.getParameter("a"));
+        int b = Integer.parseInt(req.getParameter("b"));
+
+        res.getWriter().append(a + b + "");
+    }
+
 }
