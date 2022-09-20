@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class MainController {
 
+    int increaseNum = -1;
+
     @RequestMapping("/sbb")
     @ResponseBody
     public String index() {
@@ -42,5 +44,34 @@ public class MainController {
                 """.formatted(age);
     }
 
+    @GetMapping("/plus")
+    @ResponseBody
+    public String plus(@RequestParam(required = false) Integer a, @RequestParam(required = false) Integer b) {
+        if( a == null ) {
+            return "a를 입력해주세요.";
+        }
+        if( b == null ) {
+            return "b를 입력해주세요.";
+        }
+        return String.valueOf(a + b);
+    }
 
+    @GetMapping("/minus")
+    @ResponseBody
+    public String minus(@RequestParam(required = false) Integer a, @RequestParam(required = false) Integer b) {
+        if( a == null ) {
+            return "a를 입력해주세요.";
+        }
+        if( b == null ) {
+            return "b를 입력해주세요.";
+        }
+        return String.valueOf(a - b);
+    }
+
+    @GetMapping("/increase")
+    @ResponseBody
+    public int increase() {
+
+        return increaseNum++;
+    }
 }
