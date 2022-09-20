@@ -88,4 +88,20 @@ public class MainController {
         res.getWriter().append(a + b + "");
     }
 
+    @GetMapping("gugudan")
+    @ResponseBody
+    public String gugudan(int dan, int limit) {
+        // 이런 방식으로도 구현할 수 있다
+//        final Integer finalDan = dan;
+//        return IntStream.rangeClosed(1, limit)
+//                .mapToObj(i -> "%d * %d = %d".formatted(finalDan, i, finalDan * i))
+//                .collect(Collectors.joining("<br>\n"));
+        String result = "";
+        for(int i = 1; i <= limit; i++) {
+            result += dan + " * " + i + " = " + (dan *  i) + "<br/>\n";
+        }
+        return result;
+
+    }
+
 }
