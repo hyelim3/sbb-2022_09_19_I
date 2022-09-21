@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Controller
@@ -104,4 +105,18 @@ public class MainController {
 
     }
 
+    @GetMapping("/saveSessionAge")
+    @ResponseBody
+    public String saveSession(@RequestParam("age") int age, HttpSession session) {
+        System.out.println("age: " + age);
+        session.setAttribute("age", age);
+        return "나이 %d이 세션에 저장되었습니다.".formatted(age);
+    }
+
+    @GetMapping("/getSessionAge")
+    @ResponseBody
+    public String saveSession(HttpSession session) {
+        int age = (int) session.getAttribute("age");
+        return "세션에 저장된 나이는 %d입니다.".formatted(age);
+    }
 }
