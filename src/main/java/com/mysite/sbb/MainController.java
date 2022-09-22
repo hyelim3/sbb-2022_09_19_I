@@ -1,8 +1,11 @@
 package com.mysite.sbb;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -107,7 +110,7 @@ public class MainController {
 
     @GetMapping("/saveSessionAge")
     @ResponseBody
-    public String saveSession(@RequestParam("age") int age, HttpSession session) {
+    public String saveSession(@RequestParam(value = "age", defaultValue = "0") int age, HttpSession session) {
         System.out.println("age: " + age);
         session.setAttribute("age", age);
         return "나이 %d이 세션에 저장되었습니다.".formatted(age);
@@ -115,8 +118,27 @@ public class MainController {
 
     @GetMapping("/getSessionAge")
     @ResponseBody
-    public String saveSession(HttpSession session) {
+    public String saveSession(HttpSession session, HttpServletResponse res) {
         int age = (int) session.getAttribute("age");
+        Cookie cookie = new Cookie("age", String.valueOf(age));
+        res.addCookie(cookie);
+
         return "세션에 저장된 나이는 %d입니다.".formatted(age);
     }
+
+    @GetMapping("/addPerson/{id}")
+    @ResponseBody
+    public Person addPerson(Person person) {
+        return person;
+    }
+}
+
+@Getter
+@AllArgsConstructor
+class Person {
+    private int id;
+
+    private int age;
+
+    private String name;
 }
