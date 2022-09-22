@@ -1,5 +1,6 @@
 package com.mysite.sbb;
 
+import com.mysite.sbb.question.domain.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,9 @@ import java.io.IOException;
 public class MainController {
 
     int increaseNum = -1;
+
+
+
 
     @RequestMapping("/sbb")
     @ResponseBody
@@ -131,6 +135,7 @@ public class MainController {
     public Person addPerson(Person person) {
         return person;
     }
+
 }
 
 @Getter
