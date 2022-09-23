@@ -54,8 +54,13 @@ class SbbApplicationTests {
 
 	@Test
 	void getQuestionBySubject() {
-		Question q = questionRepository.findBySubject("sbb가 무엇인가요?");
+		Question q = this.questionRepository.findBySubject("sbb가 무엇인가요?");
 		assertEquals(1, q.getId());
 	}
 
+	@Test
+	void getQuestionsBySubject() {
+		List<Question> questions = this.questionRepository.findAllBySubject("sbb가 무엇인가요?");
+		assertEquals(3, questions.size());
+	}
 }
