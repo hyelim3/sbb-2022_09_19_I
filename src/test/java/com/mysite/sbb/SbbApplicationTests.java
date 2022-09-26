@@ -97,4 +97,15 @@ class SbbApplicationTests {
 			questionRepository.save(question);
 		}
 	}
+
+	@Test
+	void deleteQuestion() {
+		assertEquals(5, questionRepository.count());
+		Optional<Question> oq = questionRepository.findById(1);
+		if(oq.isPresent()) {
+			Question question = oq.get();
+			questionRepository.delete(question);
+		}
+		assertEquals(4, questionRepository.count());
+	}
 }
