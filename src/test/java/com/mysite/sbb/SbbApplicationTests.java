@@ -1,5 +1,7 @@
 package com.mysite.sbb;
 
+import com.mysite.sbb.answer.dao.AnswerRepository;
+import com.mysite.sbb.answer.domain.Answer;
 import com.mysite.sbb.question.dao.QuestionRepository;
 import com.mysite.sbb.question.domain.Question;
 import org.junit.jupiter.api.Test;
@@ -18,6 +20,9 @@ class SbbApplicationTests {
 
 	@Autowired
 	private QuestionRepository questionRepository;
+
+	@Autowired
+	private AnswerRepository answerRepository;
 
 	@Test
 	void contextLoads() {
@@ -107,5 +112,21 @@ class SbbApplicationTests {
 			questionRepository.delete(question);
 		}
 		assertEquals(4, questionRepository.count());
+	}
+
+	@Test
+	void createAnswer() {
+		Optional<Question> oq = questionRepository.findById(2);
+		if(oq.isPresent()){
+			Question question = oq.get();
+
+			Answer answer = new Answer();
+			answer.setContent("답변입니다");
+			answer.setQuestion(question);
+			answer.setCreateDate(LocalDateTime.now());
+			answerRepository.save(answer);
+
+		}
+
 	}
 }

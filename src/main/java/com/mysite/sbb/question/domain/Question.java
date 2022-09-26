@@ -1,6 +1,6 @@
 package com.mysite.sbb.question.domain;
 
-import com.mysite.sbb.answer.Answer;
+import com.mysite.sbb.answer.domain.Answer;
 import lombok.Getter;
 import lombok.Setter;
 
