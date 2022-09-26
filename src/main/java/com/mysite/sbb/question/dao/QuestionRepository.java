@@ -8,7 +8,9 @@ import java.util.List;
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
     Question findBySubject(String s);
 
-    List<Question> findAllBySubject(String s);
+    List<Question> findAllBySubject(String subject);
 
     List<Question> findAllBySubjectIn(List<String> searchWordList);
+
+    List<Question> findBySubjectAndContent(String subject, String content);
 }

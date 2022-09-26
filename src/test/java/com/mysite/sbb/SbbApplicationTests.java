@@ -74,4 +74,10 @@ class SbbApplicationTests {
 		List<Question> questions = this.questionRepository.findAllBySubjectIn(searchWordList);
 		assertEquals(4, questions.size());
 	}
+
+	@Test
+	void getQuestionsBySubjectAndContent() {
+		List<Question> questions = questionRepository.findBySubjectAndContent("sbb가 무엇인가요?", "sbb에 대해 알고 싶습니다.");
+		assertEquals(2, questions.size());
+	}
 }
