@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,8 +126,18 @@ class SbbApplicationTests {
 			answer.setQuestion(question);
 			answer.setCreateDate(LocalDateTime.now());
 			answerRepository.save(answer);
+		}
+	}
+
+	@Test
+	@Transactional
+	void getAnswersByQuestion() {
+		Optional<Question> oq = questionRepository.findById(2);
+		if(oq.isPresent()) {
+			Question question = oq.get();
+			List<Answer> answerList = question.getAnswerList();
+			assertEquals(1, answerList.size());
 
 		}
-
 	}
 }
