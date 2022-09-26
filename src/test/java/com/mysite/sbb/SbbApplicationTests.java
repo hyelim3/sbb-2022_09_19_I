@@ -80,4 +80,10 @@ class SbbApplicationTests {
 		List<Question> questions = questionRepository.findBySubjectAndContent("sbb가 무엇인가요?", "sbb에 대해 알고 싶습니다.");
 		assertEquals(2, questions.size());
 	}
+
+	@Test
+	void getQuestionsHaveStrings() {
+		List<Question> questions = questionRepository.findBySubjectLike("sbb%");
+		assertEquals(3, questions.size());
+	}
 }
