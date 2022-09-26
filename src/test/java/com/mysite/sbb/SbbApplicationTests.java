@@ -86,4 +86,15 @@ class SbbApplicationTests {
 		List<Question> questions = questionRepository.findBySubjectLike("sbb%");
 		assertEquals(3, questions.size());
 	}
+
+	@Test
+	void updateQuestion() {
+		Optional<Question> oq = questionRepository.findById(2);
+		if(oq.isPresent()) {
+			Question question = oq.get();
+			question.setSubject("수정된 질문");
+			question.setContent("수정된 내용");
+			questionRepository.save(question);
+		}
+	}
 }
