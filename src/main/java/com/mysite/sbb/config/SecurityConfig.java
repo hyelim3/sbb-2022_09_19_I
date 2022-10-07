@@ -22,7 +22,7 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .antMatchers("/**").permitAll()
                 .and()
-                .csrf().ignoringAntMatchers("/h2-console/**");
+                .csrf().ignoringAntMatchers("/**");
         return http.build();
     }
 }
