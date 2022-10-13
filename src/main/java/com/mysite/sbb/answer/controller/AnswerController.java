@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.security.Principal;
 
 @RequestMapping("/answer")
 @RequiredArgsConstructor
@@ -49,9 +48,9 @@ public class AnswerController {
     //해당 답변의 내용을 집어넣음 -> answer_form으로 보냄
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
-    public String answerModify(AnswerForm answerForm, @PathVariable("id") Integer id, Principal principal) {
+    public String answerModify(AnswerForm answerForm, @PathVariable("id") Integer id, @AuthenticationPrincipal SiteUser siteUser) {
         Answer answer = this.answerService.getAnswer(id);
-        if (!answer.getAuthor().getUsername().equals(principal.getName())) {
+        if(!answer.getAuthor().getUsername().equals(siteUser.getUsername()) && !(siteUser.getRole().equals("ROLE_ADMIN"))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         answerForm.setContent(answer.getContent());
@@ -62,13 +61,13 @@ public class AnswerController {
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{id}")
     public String answerModify(@Valid AnswerForm answerForm, BindingResult bindingResult,
-                               @PathVariable("id") Integer id, Principal principal){
+                               @PathVariable("id") Integer id, @AuthenticationPrincipal SiteUser siteUser){
         if (bindingResult.hasErrors()) {
             return "answer_form";
         }
         //입력받은 아이디에 해당 질문을 가져옴
         Answer answer = this.answerService.getAnswer(id);
-        if (!answer.getAuthor().getUsername().equals(principal.getName())) {
+        if (!answer.getAuthor().getUsername().equals(siteUser.getUsername()) && !(siteUser.getRole().equals("ROLE_ADMIN"))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
 

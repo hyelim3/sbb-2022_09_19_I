@@ -21,6 +21,7 @@ public class UserService {
         SiteUser user = SiteUser.builder()
                 .username(username)
                 .email(email)
+                .role("ROLE_USER")
                 .password(passwordEncoder.encode(password))
                 .build();
 
