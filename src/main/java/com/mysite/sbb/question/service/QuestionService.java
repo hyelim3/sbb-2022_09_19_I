@@ -56,4 +56,10 @@ public class QuestionService {
     public void delete(Question question) {
         questionRepository.delete(question);
     }
+
+    //추천인을 저장하기 위해
+    public void vote(Question question, SiteUser siteUser) {
+        question.getVoter().add(siteUser);
+        questionRepository.save(question);
+    }
 }
