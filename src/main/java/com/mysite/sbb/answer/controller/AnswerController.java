@@ -40,9 +40,10 @@ public class AnswerController {
             return "question_detail";
         }
 
-        answerService.create(question, answerForm.getContent(), siteUser);
-
-        return String.format("redirect:/question/detail/%s", id);
+        Answer answer = this.answerService.create(question,
+                answerForm.getContent(), siteUser);
+        return String.format("redirect:/question/detail/%s#answer_%s",
+                answer.getQuestion().getId(), answer.getId());
     }
 
     //해당 답변의 내용을 집어넣음 -> answer_form으로 보냄
@@ -54,7 +55,8 @@ public class AnswerController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         answerForm.setContent(answer.getContent());
-        return "answer_form";
+        return String.format("redirect:/question/detail/%s#answer_%s",
+                answer.getQuestion().getId(), answer.getId());
     }
 
     //이제 post요청으로 보냄(수정)
@@ -91,7 +93,8 @@ public class AnswerController {
     public String answerVote(@AuthenticationPrincipal SiteUser siteUser, @PathVariable("id") Integer id) {
         Answer answer = this.answerService.getAnswer(id);
         this.answerService.vote(answer, siteUser);
-        return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+        return String.format("redirect:/question/detail/%s#answer_%s",
+                answer.getQuestion().getId(), answer.getId());
     }
 
 }

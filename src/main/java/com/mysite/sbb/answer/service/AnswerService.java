@@ -15,13 +15,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AnswerService {
     private final AnswerRepository answerRepository;
-    public void create(Question question, String content, SiteUser siteUser) {
+    public Answer create(Question question, String content, SiteUser siteUser) {
         Answer answer = new Answer();
         answer.setCreateDate(LocalDateTime.now());
         answer.setQuestion(question);
         answer.setContent(content);
         answer.setAuthor(siteUser);
         answerRepository.save(answer);
+        return answer;
     }
 
     //질문하나 반환하는 getAnswer 수정버튼을 누르면 내용을 찾아와야함

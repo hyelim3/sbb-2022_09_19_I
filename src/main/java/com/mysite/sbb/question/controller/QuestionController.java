@@ -112,7 +112,8 @@ public class QuestionController {
     @GetMapping("/vote/{id}")
     public String questionVote(@AuthenticationPrincipal SiteUser siteUser, @PathVariable("id") Integer id) {
         Question question = this.questionService.getQuestion(id);
-        this.questionService.vote(question, siteUser);
+        SiteUser _siteUser = this.userService.getUser(siteUser.getUsername());
+        this.questionService.vote(question, _siteUser);
         return String.format("redirect:/question/detail/%s", id);
     }
 
